@@ -1,8 +1,17 @@
 # Cheshire Cat SDK for Laravel
 
-![Cheshire Cat AI](https://cheshirecat.ai/wp-content/uploads/2023/12/CheshireCat-4096x1024_powered_by_white.png)
-
+![Cheshire Cat Logo](assets/logo.png)
 Laravel SDK for interacting with Cheshire Cat AI API, providing seamless integration with endpoints for messages, user management, settings, memory, plugins, and more.
+
+---
+
+## API Reference and Versioning
+
+This SDK is built to interact with the Cheshire Cat API. For a comprehensive list of all available endpoints, their parameters, and expected responses, please refer to the [OpenAPI specification file](docs/openapi.json).
+
+**Version Compatibility:** The `openapi.json` file also indicates the specific version of the Cheshire Cat API that this SDK is designed to work with. This ensures compatibility and helps you understand the features and functionalities supported by the SDK.
+
+**Current API Version:** 1.9.0 (as per openapi.json)
 
 ---
 
@@ -48,9 +57,9 @@ return [
 
 Use the `CheshireCat` Facade or the `CheshireCat` class directly.
 
-### Connessione WebSocket
+### WebSocket Connection
 
-L'SDK supporta connessioni WebSocket per comunicazioni in tempo reale con il server Cheshire Cat AI.
+The SDK supports WebSocket connections for real-time communication with the Cheshire Cat AI server.
 
 
 ### Examples
