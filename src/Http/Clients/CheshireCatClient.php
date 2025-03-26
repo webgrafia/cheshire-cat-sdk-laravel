@@ -548,16 +548,47 @@ class CheshireCatClient
     }
 
     /**
-     * Upload a file containing text (.txt, .md, .pdf, etc.).
+     * Carica un file al server tramite l'endpoint '/rabbithole/'.
      *
-     * @param array $fileData
+     * @param string $filePath   Il percorso del file da caricare.
+     * @param string $fileName   Il nome del file.
+     * @param string $contentType Il tipo MIME del file.
+     * @param array  $metadata   Metadati aggiuntivi per il file (opzionale).
+     * @param int    $chunkSize  Dimensione di chunk (opzionale).
+     * @return mixed Risposta dall'API.
      *
-     * @return mixed
+     * @throws \Exception Se il file non esiste o non è leggibile.
      */
-    public function uploadFile(array $fileData)
+    public function uploadFile(string $filePath, string $fileName, string $contentType, array $metadata = [], int $chunkSize = 128)
     {
+        if (!file_exists($filePath) || !is_readable($filePath)) {
+            throw new \Exception("Il file non esiste o non è leggibile: {$filePath}");
+        }
+
+        // Prepara i dati multipart.
+        $fileData = [
+            [
+                'name' => 'file',
+                'contents' => fopen($filePath, 'r'),
+                'filename' => $fileName,
+                'headers' => [
+                    'Content-Type' => $contentType,
+                ],
+            ],
+            [
+                'name' => 'chunk_size',
+                'contents' => $chunkSize,
+            ],
+            [
+                'name' => 'metadata',
+                'contents' => json_encode($metadata), // Metadata JSON-encoded
+            ],
+        ];
+
+        // Esegui la richiesta POST
         return $this->handleRequest('POST', '/rabbithole/', ['multipart' => $fileData]);
     }
+
 
     /**
      * Batch upload multiple files containing text (.txt, .md, .pdf, etc.).
