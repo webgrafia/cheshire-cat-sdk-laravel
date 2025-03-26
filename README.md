@@ -11,7 +11,7 @@ Laravel SDK for interacting with Cheshire Cat AI API, providing seamless integra
 1. Install the package via Composer:
 
    ```bash
-   composer require username/cheshire-cat-sdk-laravel
+   composer require webgrafia/cheshire-cat-sdk-laravel
    ```
 
 2. Publish the configuration file:
