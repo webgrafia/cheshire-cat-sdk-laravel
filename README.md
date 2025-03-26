@@ -63,28 +63,6 @@ The SDK supports WebSocket connections for real-time communication with the Ches
 
 
 ### Examples
-#### WebSocket Basic Usage Example
-
-```php
-use CheshireCatSdk\Facades\CheshireCatFacade as CheshireCat;
-$payload = ['text' => 'Hello, who are you?'];
-        CheshireCat::sendMessageViaWebSocket($payload);
-
-        // Ciclo per ricevere più messaggi
-        while (true) {
-            // Ricevi la risposta
-            $response = CheshireCat::wsClient()->receive();
-            $response = json_decode($response, true);
-
-            if($response["type"] == "chat"){
-                echo $response["text"];
-                break;
-            }
-        }
-
-        // Chiudi la connessione WebSocket
-        CheshireCat::closeWebSocketConnection();
-```
 
 
 ### Methods
@@ -234,7 +212,33 @@ print_r($permissions);
   echo $response->getStatusCode();
   ```
 
-#### 8. Upload File
+---
+
+### WebSocket Basic Usage Example
+
+```php
+use CheshireCatSdk\Facades\CheshireCatFacade as CheshireCat;
+$payload = ['text' => 'Hello, who are you?'];
+        CheshireCat::sendMessageViaWebSocket($payload);
+
+        // Ciclo per ricevere più messaggi
+        while (true) {
+            // Ricevi la risposta
+            $response = CheshireCat::wsClient()->receive();
+            $response = json_decode($response, true);
+
+            if($response["type"] == "chat"){
+                echo $response["text"];
+                break;
+            }
+        }
+
+        // Chiudi la connessione WebSocket
+        CheshireCat::closeWebSocketConnection();
+```
+
+---
+### Rabbit Hole File Upload
 Upload a file to the API via the `/rabbithole/` endpoint.
 
 ```php
@@ -269,6 +273,8 @@ if ($response->getStatusCode() === 200) {
 
 ---
 
+
+
 ## Testing
 
 example of route in web.php for testing
@@ -276,7 +282,7 @@ example of route in web.php for testing
 use Illuminate\Support\Facades\Route;
 use CheshireCatSdk\Facades\CheshireCatFacade as CheshireCat;
 
-Route::get('/cat_test_connection', function () {
+Route::get('/meow_connection', function () {
     try {
         // Try to get the status of the Cheshire Cat API
         $statusResponse = CheshireCat::getStatus();
@@ -295,7 +301,16 @@ Route::get('/cat_test_connection', function () {
     }
 });
 ```
-and check at http://127.0.0.1:8000/cat_test_connection
+and check at http://127.0.0.1:8000/meow_connection
+
+---
+
+## Unit Test
+
+```bash
+./vendor/bin/phpunit tests/Unit/
+```
+
 
 ---
 
