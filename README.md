@@ -23,7 +23,8 @@ Laravel SDK for interacting with Cheshire Cat AI API, providing seamless integra
 3. Update `.env` with Cheshire Cat API credentials:
 
    ```env
-   CHESHIRE_CAT_BASE_URI=https://api.cheshirecat.ai
+   CHESHIRE_CAT_BASE_URI=http://localhost:1865/
+   CHESHIRE_CAT_WS_BASE_URI=ws://localhost:1865/ws
    CHESHIRE_CAT_API_KEY=your_api_key_here
    ```
 
@@ -35,7 +36,8 @@ The published configuration file is located at `config/cheshirecat.php`:
 
 ```php
 return [
-    'base_uri' => env('CHESHIRE_CAT_BASE_URI', 'https://api.cheshirecat.ai'),
+    'base_uri' => env('CHESHIRE_CAT_BASE_URI', 'http://localhost:1865/'),
+    'ws_base_uri' => env('CHESHIRE_CAT_WS_BASE_URI', 'ws://localhost:1865/ws'),
     'api_key' => env('CHESHIRE_CAT_API_KEY'),
 ];
 ```
@@ -50,28 +52,38 @@ Use the `CheshireCat` Facade or the `CheshireCat` class directly.
 
 L'SDK supporta connessioni WebSocket per comunicazioni in tempo reale con il server Cheshire Cat AI.
 
-#### Esempio di utilizzo
-
-```php
-use CheshireCatSdk\Facades\CheshireCat;
-
-// Invia un messaggio tramite WebSocket
-$response = CheshireCat::sendMessageViaWebSocket([
-    'text' => 'Hello WebSocket!'
-]);
-print_r($response);
-
-// Chiudi la connessione WebSocket
-CheshireCat::closeWebSocketConnection();
-```
 
 ### Examples
+#### WebSocket Basic Usage Example
 
+```php
+use CheshireCatSdk\Facades\CheshireCatFacade as CheshireCat;
+$payload = ['text' => 'Hello, who are you?'];
+        CheshireCat::sendMessageViaWebSocket($payload);
+
+        // Ciclo per ricevere più messaggi
+        while (true) {
+            // Ricevi la risposta
+            $response = CheshireCat::wsClient()->receive();
+            $response = json_decode($response, true);
+
+            if($response["type"] == "chat"){
+                echo $response["text"];
+                break;
+            }
+        }
+
+        // Chiudi la connessione WebSocket
+        CheshireCat::closeWebSocketConnection();
+```
+
+
+### Methods
 
 
 #### 1. Status Check
 ```php
-use CheshireCatSdk\Facades\CheshireCat;
+use CheshireCatSdk\Facades\CheshireCatFacade as CheshireCat;
 
 $response = CheshireCat::status();
 
@@ -213,15 +225,68 @@ print_r($permissions);
   echo $response->getStatusCode();
   ```
 
+#### 8. Upload File
+Upload a file to the API via the `/rabbithole/` endpoint.
+
+```php
+use CheshireCatSdk\Facades\CheshireCatFacade as CheshireCat;
+
+$filePath = 'tests/mocks/sample.pdf';
+$fileName = 'sample.pdf';
+$contentType = 'application/pdf';
+
+$metadata = [
+    "source" => "sample.pdf",
+    "title" => "Test title",
+    "author" => "Test author",
+    "year" => 2020,
+];
+
+$response = CheshireCat::uploadFile($filePath, $fileName, $contentType, $metadata);
+
+if ($response->getStatusCode() === 200) {
+    echo "File uploaded successfully!";
+}
+```
+
+**Parameters**:
+- `$filePath` - The path to the file to be uploaded.
+- `$fileName` - The name of the file.
+- `$contentType` - MIME type of the file (e.g., `application/pdf`).
+- `$metadata` - Associative array containing optional metadata related to the file.
+
+**Response**:
+- Returns an HTTP response object containing the details of the API's response.
+
 ---
 
 ## Testing
 
-Run tests using PHPUnit:
+example of route in web.php for testing
+```php
+use Illuminate\Support\Facades\Route;
+use CheshireCatSdk\Facades\CheshireCatFacade as CheshireCat;
 
-```bash
-vendor/bin/phpunit
+Route::get('/cat_test_connection', function () {
+    try {
+        // Try to get the status of the Cheshire Cat API
+        $statusResponse = CheshireCat::getStatus();
+
+        // Check if the status response is successful
+        if ($statusResponse->getStatusCode() === 200) {
+            echo "Cheshire Cat API connection successful!<br>";
+            echo "Status Response: " . $statusResponse->getBody()->getContents();
+        } else {
+            echo "Cheshire Cat API connection failed!<br>";
+            echo "Status Response: " . $statusResponse->getBody()->getContents();
+        }
+    } catch (\Exception $e) {
+        echo "Cheshire Cat API connection failed!<br>";
+        echo "Error: " . $e->getMessage();
+    }
+});
 ```
+and check at http://127.0.0.1:8000/cat_test_connection
 
 ---
 
@@ -233,5 +298,5 @@ Feel free to fork this repository and submit pull requests.
 
 ## License
 
-This package is open-source software licensed under the [MIT license](LICENSE).
+This package is open-source software licensed under the [GNU GENERAL PUBLIC LICENSE](LICENSE).
 
