@@ -1,11 +1,16 @@
 <?php
+
 namespace CheshireCatSdk;
+
 use CheshireCatSdk\Http\Clients\CheshireCatClient;
 use CheshireCatSdk\Http\Clients\WebSocketClient;
+
 class CheshireCat
 {
     protected $client;
     public $wsClient; //aggiunta variabile pubblica
+    public $wsConnectionOpen = false; //aggiunta variabile per controllare se la connessione è aperta
+
     /**
      * CheshireCat constructor.
      * Initializes REST and WebSocket clients.
@@ -15,6 +20,7 @@ class CheshireCat
         $this->client = new CheshireCatClient();
         $this->wsClient = new WebSocketClient();
     }
+
     /**
      * Handles access to REST client methods dynamically.
      *
@@ -26,6 +32,7 @@ class CheshireCat
     {
         return call_user_func_array([$this->client, $method], $arguments);
     }
+
     /**
      * Retrieves the status of the CheshireCat service.
      *
@@ -35,6 +42,7 @@ class CheshireCat
     {
         return $this->client->getStatus();
     }
+
     /**
      * Sends a message using the REST API.
      *
@@ -45,6 +53,7 @@ class CheshireCat
     {
         return $this->client->sendMessage(['text' => $text]);
     }
+
     /**
      * Sends a message using the WebSocket client.
      *
@@ -53,8 +62,13 @@ class CheshireCat
      */
     public function sendMessageViaWebSocket(array $payload)
     {
+        if (!$this->wsConnectionOpen) {
+            $this->wsClient->open();
+            $this->wsConnectionOpen = true;
+        }
         return $this->wsClient->sendMessage($payload);
     }
+
     /**
      * Closes the WebSocket connection.
      *
@@ -62,6 +76,9 @@ class CheshireCat
      */
     public function closeWebSocketConnection()
     {
-        $this->wsClient->close();
+        if ($this->wsConnectionOpen) {
+            $this->wsClient->close();
+            $this->wsConnectionOpen = false;
+        }
     }
 }

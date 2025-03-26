@@ -17,6 +17,13 @@ class WebSocketClient
         $url = config('cheshirecat.ws_base_uri');
         $this->client = new Client($url);
     }
+    /**
+     * Opens the WebSocket connection.
+     */
+    public function open()
+    {
+        $this->client->connect();
+    }
 
     /**
      * Sends a message to the WebSocket server.
