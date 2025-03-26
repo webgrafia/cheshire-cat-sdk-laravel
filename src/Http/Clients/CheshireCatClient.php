@@ -18,6 +18,7 @@ class CheshireCatClient
         $this->client = new Client([
             'base_uri' => config('cheshirecat.base_uri'),
             'headers' => ['Authorization' => 'Bearer ' . config('cheshirecat.api_key')],
+            'timeout' => 60,
         ]);
     }
 

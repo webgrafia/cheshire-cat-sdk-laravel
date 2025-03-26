@@ -15,7 +15,7 @@ class WebSocketClient
     public function __construct()
     {
         $url = config('cheshirecat.ws_base_uri');
-        $this->client = new Client($url);
+        $this->client = new Client($url, ['timeout' => 60]);
     }
 
     /**
