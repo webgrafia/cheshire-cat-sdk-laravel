@@ -5,7 +5,7 @@ use CheshireCatSdk\Http\Clients\WebSocketClient;
 class CheshireCat
 {
     protected $client;
-    protected $wsClient;
+    public $wsClient; //aggiunta variabile pubblica
     /**
      * CheshireCat constructor.
      * Initializes REST and WebSocket clients.
@@ -65,4 +65,3 @@ class CheshireCat
         $this->wsClient->close();
     }
 }
-
