@@ -1,6 +1,6 @@
 # Cheshire Cat SDK for Laravel
 
-![Cheshire Cat AI](https://cheshirecat.ai/wp-content/uploads/2023/10/Logo-Cheshire-Cat.svg)
+![Cheshire Cat AI](https://cheshirecat.ai/wp-content/uploads/2023/12/CheshireCat-4096x1024_powered_by_white.png)
 
 Laravel SDK for interacting with Cheshire Cat AI API, providing seamless integration with endpoints for messages, user management, settings, memory, plugins, and more.
 
@@ -46,7 +46,28 @@ return [
 
 Use the `CheshireCat` Facade or the `CheshireCat` class directly.
 
+### Connessione WebSocket
+
+L'SDK supporta connessioni WebSocket per comunicazioni in tempo reale con il server Cheshire Cat AI.
+
+#### Esempio di utilizzo
+
+```php
+use CheshireCatSdk\Facades\CheshireCat;
+
+// Invia un messaggio tramite WebSocket
+$response = CheshireCat::sendMessageViaWebSocket([
+    'text' => 'Hello WebSocket!'
+]);
+print_r($response);
+
+// Chiudi la connessione WebSocket
+CheshireCat::closeWebSocketConnection();
+
+
 ### Examples
+
+
 
 #### 1. Status Check
 ```php

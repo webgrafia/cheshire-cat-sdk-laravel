@@ -1,0 +1,35 @@
+{
+  "name": "webgrafia/cheshire-cat-sdk-laravel",
+  "description": "Laravel SDK for Cheshire Cat AI API.",
+  "type": "library",
+  "require": {
+    "php": ">=8.0",
+    "guzzlehttp/guzzle": "^7.0",
+    "textalk/websocket": "^1.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "CheshireCatSdk\\": "src/",
+      "CheshireCatSdk\\Facades\\": "src/Facades/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CheshireCatSdk\\CheshireCatServiceProvider"
+      ],
+      "aliases": {
+        "CheshireCat": "CheshireCatSdk\\Facades\\CheshireCatFacade"
+      }
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^12.0",
+    "laravel/framework": "^12.3"
+  }
+}
