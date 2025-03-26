@@ -63,7 +63,7 @@ print_r($response);
 
 // Chiudi la connessione WebSocket
 CheshireCat::closeWebSocketConnection();
-
+```
 
 ### Examples
 
