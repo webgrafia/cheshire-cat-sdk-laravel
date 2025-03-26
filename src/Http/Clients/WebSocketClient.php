@@ -2,45 +2,48 @@
 
 namespace CheshireCatSdk\Http\Clients;
 
-use CheshireCatSdk\Exceptions\CheshireCatWebSocketException;
 use WebSocket\Client;
-use WebSocket\ConnectionException;
 
 class WebSocketClient
 {
-    protected Client $client;
-    protected string $wsBaseUri;
+    protected $client;
 
-    public function __construct(string $wsBaseUri = 'ws://localhost:1865/ws')
+    /**
+     * WebSocketClient constructor.
+     * Initializes the WebSocket client with the configured base URI.
+     */
+    public function __construct()
     {
-        $this->wsBaseUri = $wsBaseUri;
-        $this->client = new Client($this->wsBaseUri);
+        $url = config('cheshirecat.ws_base_uri');
+        $this->client = new Client($url, ['timeout' => 60]);
     }
 
+    /**
+     * Sends a message to the WebSocket server.
+     *
+     * @param array $payload The payload to send to the WebSocket server.
+     * @return void
+     */
     public function sendMessage(array $payload)
     {
-        try {
-            $this->client->send(json_encode($payload));
-        } catch (ConnectionException $e) {
-            throw new CheshireCatWebSocketException("Error sending message: " . $e->getMessage(), $e->getCode(), $e);
-        }
+        $this->client->send(json_encode($payload));
     }
 
+    /**
+     * Receives a message from the WebSocket server.
+     *
+     * @return string The message received from the WebSocket server.
+     */
     public function receive()
     {
-        try {
-            return $this->client->receive();
-        } catch (ConnectionException $e) {
-            throw new CheshireCatWebSocketException("Error receiving message: " . $e->getMessage(), $e->getCode(), $e);
-        }
+        return $this->client->receive();
     }
 
+    /**
+     * Closes the WebSocket connection.
+     */
     public function close()
     {
-        try {
-            $this->client->close();
-        } catch (ConnectionException $e) {
-            throw new CheshireCatWebSocketException("Error closing connection: " . $e->getMessage(), $e->getCode(), $e);
-        }
+        $this->client->close();
     }
 }
