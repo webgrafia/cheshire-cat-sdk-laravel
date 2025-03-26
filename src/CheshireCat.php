@@ -9,7 +9,6 @@ class CheshireCat
 {
     protected $client;
     public $wsClient; //aggiunta variabile pubblica
-    public $wsConnectionOpen = false; //aggiunta variabile per controllare se la connessione è aperta
 
     /**
      * CheshireCat constructor.
@@ -62,10 +61,6 @@ class CheshireCat
      */
     public function sendMessageViaWebSocket(array $payload)
     {
-        if (!$this->wsConnectionOpen) {
-            $this->wsClient->open();
-            $this->wsConnectionOpen = true;
-        }
         return $this->wsClient->sendMessage($payload);
     }
 
@@ -76,9 +71,6 @@ class CheshireCat
      */
     public function closeWebSocketConnection()
     {
-        if ($this->wsConnectionOpen) {
-            $this->wsClient->close();
-            $this->wsConnectionOpen = false;
-        }
+        $this->wsClient->close();
     }
 }
