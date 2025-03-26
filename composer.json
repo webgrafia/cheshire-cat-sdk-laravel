@@ -2,7 +2,6 @@
   "name": "webgrafia/cheshire-cat-sdk-laravel",
   "description": "Laravel SDK for interacting with Cheshire Cat AI API",
   "type": "library",
-  "license": "GPL-3.0-or-later",
   "require": {
     "php": ">=8.0",
     "guzzlehttp/guzzle": "^7.0",
@@ -19,12 +18,6 @@
       "Tests\\": "tests/"
     }
   },
-  "authors": [
-    {
-      "name": "Marco Buttarini",
-      "email": "hello@bititup.it"
-    }
-  ],
   "extra": {
     "laravel": {
       "providers": [
@@ -35,14 +28,11 @@
       }
     }
   },
-  "minimum-stability": "dev",
-  "require": {
-    "php": "^8.1",
-    "guzzlehttp/guzzle": "^7.8",
-    "ext-json": "*"
-  },
   "require-dev": {
     "phpunit/phpunit": "^10.4",
     "laravel/framework": "^12.3"
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "license": "GPL-3.0"
 }

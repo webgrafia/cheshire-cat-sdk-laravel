@@ -17,8 +17,8 @@ class CheshireCat
      */
     public function __construct()
     {
-        $this->client = new CheshireCatClient(Config::get('cheshirecat.base_uri'), Config::get('cheshirecat.api_key'));
-        $this->wsClient = new WebSocketClient(Config::get('cheshirecat.ws_base_uri'));
+        $this->client = new CheshireCatClient();
+        $this->wsClient = new WebSocketClient();
     }
 
     /**
