@@ -39,6 +39,20 @@ This SDK is built to interact with the Cheshire Cat API. For a comprehensive lis
 
 ---
 
+
+## Default Routes
+
+The SDK provides 2 default route `/meow/status` and `/meow/hello` that can be used to check the status of the Cheshire Cat API.
+
+### Usage
+
+To check the status of the API, simply navigate to `http://your-app-domain/meow/status` in your browser.
+To say Hello to Cheshire simply navigate to `http://your-app-domain/meow/hello` in your browser.
+
+This routes will return a message indicating whether the API connection was successful or not, along with the status response or any error messages.
+
+---
+
 ## Configuration
 
 The published configuration file is located at `config/cheshirecat.php`:
@@ -272,17 +286,6 @@ if ($response->getStatusCode() === 200) {
 - Returns an HTTP response object containing the details of the API's response.
 
 ---
-
-## Default Routes
-
-The SDK provides 2 default route `/meow/status` and `/meow/hello` that can be used to check the status of the Cheshire Cat API.
-
-### Usage
-
-To check the status of the API, simply navigate to `http://your-app-domain/meow/status` in your browser.
-To say Hello to Cheshire simply navigate to `http://your-app-domain/meow/hello` in your browser.
-
-This routes will return a message indicating whether the API connection was successful or not, along with the status response or any error messages.
 
 ## Custom route for Testing
 
