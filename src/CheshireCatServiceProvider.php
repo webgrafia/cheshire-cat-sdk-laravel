@@ -14,7 +14,7 @@ class CheshireCatServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/cheshirecat.php', 'cheshirecat');
-        $this->app->singleton('cheshirecat', function () {
+        $this->app->bind('cheshirecat', function () {
             return new CheshireCat();
         });
     }
