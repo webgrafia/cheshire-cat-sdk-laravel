@@ -1,6 +1,6 @@
 # Cheshire Cat SDK for Laravel
 
-![Cheshire Cat Logo](assets/logo.png)
+![Cheshire Cat Logo](assets/logo-bg.png)
 Laravel SDK for interacting with [Cheshire Cat AI](https://github.com/cheshire-cat-ai/) API, providing seamless integration with endpoints for messages, user management, settings, memory, plugins, and more.
 
 ---
