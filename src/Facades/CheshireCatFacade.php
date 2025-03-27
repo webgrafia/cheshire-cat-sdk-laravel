@@ -10,8 +10,8 @@ class CheshireCatFacade extends Facade
     {
         return 'cheshirecat';
     }
-//    public static function wsClient()
-//    {
-//        return static::$app->make('cheshirecat')->wsClient;
-//    }
+    public static function wsClient()
+    {
+        return static::$app->make('cheshirecat')->wsClient;
+    }
 }
