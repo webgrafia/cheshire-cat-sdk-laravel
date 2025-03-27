@@ -57,12 +57,8 @@ return [
 
 Use the `CheshireCat` Facade or the `CheshireCat` class directly.
 
-### WebSocket Connection
 
-The SDK supports WebSocket connections for real-time communication with the Cheshire Cat AI server.
-
-
-### Examples
+## Examples
 
 
 ### Methods
@@ -213,8 +209,12 @@ print_r($permissions);
   ```
 
 ---
+### WebSocket Connection
 
-### WebSocket Basic Usage Example
+The SDK supports WebSocket connections for real-time communication with the Cheshire Cat AI server.
+
+
+#### WebSocket Basic Usage Example
 
 ```php
 use CheshireCatSdk\Facades\CheshireCatFacade as CheshireCat;
@@ -302,15 +302,6 @@ Route::get('/meow_connection', function () {
 });
 ```
 and check at http://127.0.0.1:8000/meow_connection
-
----
-
-## Unit Test
-
-```bash
-./vendor/bin/phpunit tests/Unit/
-```
-
 
 ---
 
