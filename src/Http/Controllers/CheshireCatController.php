@@ -27,4 +27,16 @@ class CheshireCatController extends Controller
             return response("Cheshire Cat API connection failed!<br>Error: " . $e->getMessage(), 500);
         }
     }
+
+
+    public function meowHello()
+    {
+        try {
+            $response = CheshireCat::message('Hello, who are you?');
+            $data = json_decode($response->getBody(), true);
+            return response($data, 200);
+        } catch (\Exception $e) {
+            return response("Cheshire Cat API connection failed!<br>Error: " . $e->getMessage(), 500);
+        }
+    }
 }

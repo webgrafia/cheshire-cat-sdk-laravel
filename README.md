@@ -273,15 +273,16 @@ if ($response->getStatusCode() === 200) {
 
 ---
 
-## Default Route
+## Default Routes
 
-The SDK provides a default route `/meow/status` that can be used to check the status of the Cheshire Cat API.
+The SDK provides 2 default route `/meow/status` and `/meow/hello` that can be used to check the status of the Cheshire Cat API.
 
 ### Usage
 
 To check the status of the API, simply navigate to `http://your-app-domain/meow/status` in your browser.
+To say Hello to Cheshire simply navigate to `http://your-app-domain/meow/hello` in your browser.
 
-This route will return a message indicating whether the API connection was successful or not, along with the status response or any error messages.
+This routes will return a message indicating whether the API connection was successful or not, along with the status response or any error messages.
 
 ## Custom route for Testing
 

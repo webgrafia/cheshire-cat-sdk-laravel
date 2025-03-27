@@ -11,10 +11,7 @@
     "psr-4": {
       "CheshireCatSdk\\": "src/",
       "CheshireCatSdk\\Facades\\": "src/Facades/"
-    },
-    "files": [
-      "src/routes/cheshirecat.php"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
