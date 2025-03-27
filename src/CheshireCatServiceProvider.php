@@ -31,7 +31,6 @@ class CheshireCatServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/cheshirecat.php' => config_path('cheshirecat.php'),
         ], 'config');
-
-        $this->loadRoutesFrom(__DIR__ . '/routes/cheshirecat.php');
+        $this->loadRoutesFrom(__DIR__.'/routes/cheshirecat.php');
     }
 }
