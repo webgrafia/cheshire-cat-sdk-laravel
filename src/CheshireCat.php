@@ -47,11 +47,18 @@ class CheshireCat
      * Sends a message using the REST API.
      *
      * @param string $text The message text to send.
+     * @param string|null $user_id Optional user ID to associate with the message.
      * @return mixed HTTP response from the API.
      */
-    public function message($text)
+    public function message($text, $user_id = null)
     {
-        return $this->client->sendMessage(['text' => $text]);
+        $payload = ['text' => $text];
+
+        if ($user_id !== null) {
+            $payload['user_id'] = $user_id;
+        }
+
+        return $this->client->sendMessage($payload);
     }
 
     /**
