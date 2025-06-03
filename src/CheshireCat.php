@@ -53,12 +53,13 @@ class CheshireCat
     public function message($text, $user_id = null)
     {
         $payload = ['text' => $text];
+        $headers = [];
 
         if ($user_id !== null) {
-            $payload['user_id'] = $user_id;
+            $headers['user_id'] = $user_id;
         }
 
-        return $this->client->sendMessage($payload);
+        return $this->client->sendMessage($payload, $headers);
     }
 
     /**

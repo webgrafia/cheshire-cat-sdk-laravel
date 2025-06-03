@@ -61,6 +61,16 @@ class CheshireCatClientTest extends TestCase
         $this->assertEquals('{"text": "Hello back!"}', $response->getBody()->getContents());
     }
 
+    public function testSendMessageWithHeadersSuccess(): void
+    {
+        $this->mockHandler->append(new Response(200, [], '{"text": "Hello back!"}'));
+        $headers = ['user_id' => 'user123'];
+        $response = $this->client->sendMessage(['text' => 'Hello!'], $headers);
+        $this->assertRequest('POST', '/message', ['json' => ['text' => 'Hello!'], 'headers' => $headers]);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('{"text": "Hello back!"}', $response->getBody()->getContents());
+    }
+
     public function testSendMessageFailure(): void
     {
         $this->mockHandler->append(new Response(400, [], '{"error": "Bad Request"}'));
@@ -455,6 +465,11 @@ class CheshireCatClientTest extends TestCase
             }
             if (isset($options['query'])) {
                 $this->assertEquals($options['query'], $request->getUri()->getQuery());
+            }
+            if (isset($options['headers'])) {
+                foreach ($options['headers'] as $name => $value) {
+                    $this->assertEquals($value, $request->getHeaderLine($name));
+                }
             }
             if (isset($options['multipart'])) {
                 $this->assertStringContainsString('multipart/form-data', $request->getHeaderLine('Content-Type'));

@@ -54,12 +54,19 @@ class CheshireCatClient
      * Send a message using the API.
      *
      * @param array $payload Message payload.
+     * @param array $headers Additional headers to include in the request.
      *
      * @return mixed API response.
      */
-    public function sendMessage(array $payload)
+    public function sendMessage(array $payload, array $headers = [])
     {
-        return $this->handleRequest('POST', '/message', ['json' => $payload]);
+        $options = ['json' => $payload];
+
+        if (!empty($headers)) {
+            $options['headers'] = $headers;
+        }
+
+        return $this->handleRequest('POST', '/message', $options);
     }
 
     /**
